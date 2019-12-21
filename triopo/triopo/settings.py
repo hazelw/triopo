@@ -75,8 +75,12 @@ WSGI_APPLICATION = 'triopo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'triopo',
+        'USER': os.getenv('TRIOPO_POSTGRES_USERNAME'),
+        'PASSWORD': os.getenv('TRIOPO_POSTGRES_PASSWORD'),
+        'HOST': os.getenv('TRIOPO_POSTGRES_HOST'),
+        'PORT': os.getenv('TRIOPO_POSTGRES_PORT')
     }
 }
 
