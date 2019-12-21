@@ -1,13 +1,17 @@
 from django.contrib.auth.models import User
 from django.db import models
 
-from ticketing.constants import TicketStatus
+from ticketing.constants import TicketPriority, TicketStatus
 
 
 class Ticket(models.Model):
     title = models.CharField(max_length=50, null=True, blank=True)
     description = models.CharField(max_length=1000)
     regarding_user_id = models.CharField(max_length=8, null=True, blank=True)
+    priority = models.CharField(
+        max_length=30,
+        choices=[(priority, priority.value for priority in TicketPriority])
+    )
     submitted_by = models.ManyToManyField(User, related_name='submitted_ticket')
     # TODO: what if the User doesn't have an account on the system? What
     # if we want to assign to a team instead?

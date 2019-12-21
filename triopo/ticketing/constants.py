@@ -1,6 +1,12 @@
 from enum import Enum
 
 
+class TicketPriority(Enum):
+    LOW = 'low'
+    MEDIUM = 'medium'
+    HIGH = 'high'
+
+
 class TicketStatus(Enum):
     NEW = 'new'
     TRIAGED = 'triaged'
