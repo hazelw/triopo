@@ -14,7 +14,7 @@ class Ticket(models.Model):
     priority = models.CharField(
         max_length=30,
         choices=[(priority.name, priority.value) for priority in TicketPriority],
-        default=TicketPriority.MEDIUM
+        default=TicketPriority.MEDIUM.value
     )
     submitted_by = models.ForeignKey(
         User, on_delete=models.PROTECT, null=True,
@@ -29,6 +29,6 @@ class Ticket(models.Model):
     status = models.CharField(
         max_length=30,
         choices=[(status.name, status.value) for status in TicketStatus],
-        default=TicketStatus.NEW
+        default=TicketStatus.NEW.value
     )
     # attachments = ???

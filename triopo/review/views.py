@@ -12,7 +12,9 @@ def index(request):
     # created_by - this is just one big yikes for now
 
     tickets = Ticket.objects.filter(status__in=[
-        TicketStatus.NEW, TicketStatus.TRIAGED, TicketStatus.ON_HOLD    
+        TicketStatus.NEW.value,
+        TicketStatus.TRIAGED.value,
+        TicketStatus.ON_HOLD.value
     ]).order_by('-updated_at')
 
     context = {
