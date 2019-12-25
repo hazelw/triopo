@@ -1,0 +1,10 @@
+<link rel="stylesheet" type="text/css" href="sidebar.css" />
+
+<div class="sidebar">
+    {% if user.is_authenticated %}
+        <a href="{% url 'log-ticket' %}">Log new ticket</a>
+        <a href="{% url 'view-tickets' %}">View tickets</a>
+    {% else %}
+        <a href="{% url 'login' %}">Log in</a>
+    {% endif %}
+</div>
