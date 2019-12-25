@@ -1,1 +1,11 @@
-hi
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    
+    <div>
+        <span>Username: {{ form.username }}</span> <br />
+        <span>Password: {{ form.password }}</span><br />
+
+        <input type="submit" value="login" />
+        <input type="hidden" name="next" value="{{ next }}" />
+    </div>
+</form>
