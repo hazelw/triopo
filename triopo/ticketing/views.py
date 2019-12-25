@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -10,16 +11,9 @@ def index(request):
     form = TicketForm()
     context = {'form': form}
 
-    # TODO: check for post
-    if form.is_valid():
-        pass
+    if request.method == 'POST':
+        form = TicketForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'Ticket successfully submitted')
 
     return render(request, 'log_ticket.html', context)
-
-
-def create_ticket(request):
-    pass
-
-
-def delete_ticket(request):
-    pass
