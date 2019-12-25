@@ -2,18 +2,19 @@ from django.http import HttpResponse
 from django.shortcuts import render
 
 from .constants import TicketStatus
+from .forms import TicketForm
 from .models import Ticket
 
 
 def index(request):
-    # TODO: serious pagination, filtering by status and priority
-    # this is just one big yikes for now
+    form = TicketForm()
+    context = {'form': form}
 
-    tickets = Ticket.objects.filter(status__in=[
-        TicketStatus.NEW, TicketStatus.TRIAGED, TicketStatus.ON_HOLD    
-    ]).order_by('-updated_date')
+    # TODO: check for post
+    if form.is_valid():
+        pass
 
-    return HttpResponse('display tickets here')
+    return render(request, 'log_ticket.html', context)
 
 
 def create_ticket(request):
