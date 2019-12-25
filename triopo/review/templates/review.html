@@ -1,0 +1,22 @@
+{% if tickets %}
+    <table>
+        <tr>
+            <th>Last updated</th>
+            <th>Title</th>
+            <th>Priority</th>
+            <th>Status</th>
+            <th>Submitted by</th>
+            <th>Assigned to</th>
+        </tr>
+        {% for ticket in tickets %}
+            <tr>
+                <td>{{ ticket.updated_at }}</td>
+                <td>{{ ticket.title }}</td>
+                <td>{{ ticket.priority }}</td>
+                <td>{{ ticket.status }}</td>
+                <td>{{ ticket.submitted_by }}</td>
+                <td>{{ ticket.assigned_to }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
