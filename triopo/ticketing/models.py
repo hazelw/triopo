@@ -1,4 +1,6 @@
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
 
@@ -20,15 +22,50 @@ class Ticket(models.Model):
         User, on_delete=models.PROTECT, null=True,
         related_name='submitted_ticket'
     )
-    # TODO: what if the User doesn't have an account on the system? What
-    # if we want to assign to a team instead?
-    assigned_to = models.ForeignKey(
-        User, on_delete=models.PROTECT, null=True, blank=True,
-        related_name='assigned_ticket'
-    )
+    assignee_type = models.ForeignKey(
+        ContentType, on_delete=models.PROTECT, null=True, blank=True)
+    assignee_id = models.PositiveIntegerField(null=True, blank=True)
+    assigned_to = GenericForeignKey('assignee_type', 'assignee_id')
+
     status = models.CharField(
         max_length=30,
         choices=[(status.name, status.value) for status in TicketStatus],
         default=TicketStatus.NEW.value
     )
     # attachments = ???
+
+
+class Assignee(models.Model):
+    pass
+
+
+class AssignedUser(Assignee):
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+
+
+class AssignedAnonymousUser(Assignee):
+    # TODO: if someone joins the system we'll want to turn all of their
+    # AssignedAnonymousUser entries into AssignedUser entries
+    email = models.CharField(max_length=100, null=True, blank=True)
+    slack_id = models.CharField(max_length=60, null=True, blank=True)
+
+    def __init__(*args, **kwargs):
+        if email not in kwargs:
+            assert kwargs.get('slack_id') is not None
+
+        if slack_id not in kwargs:
+            assert kwargs.get('email') is not None
+
+
+class AssignedTeam(Assignee):
+    # TODO: this is basically a carbon copy of AssignedAnonymousUser right now
+    # but will display differently in the interface - what else will we need?
+    email = models.CharField(max_length=100, null=True, blank=True)
+    slack_id = models.CharField(max_length=60, null=True, blank=True)
+
+    def __init__(*args, **kwargs):
+        if email not in kwargs:
+            assert kwargs.get('slack_id') is not None
+
+        if slack_id not in kwargs:
+            assert kwargs.get('email') is not None
