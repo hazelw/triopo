@@ -17,12 +17,12 @@ from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import include, path
 
-from .views import index
+from .views import index, logout
 
 urlpatterns = [
-    path('', index),
+    path('', index, name='index'),
     path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', logout, name='logout'),
     path('admin/', admin.site.urls),
     path('review/', include('review.urls')),
     path('ticketing/', include('ticketing.urls')),
