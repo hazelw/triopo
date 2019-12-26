@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'triopo.apps.MainConfig',
+    'account.apps.AccountConfig',
     'review.apps.ReviewConfig',
     'ticketing.apps.TicketingConfig',
 ]

@@ -6,7 +6,7 @@
     <div>{{ ticket.description }}</div>
     <br />
     <div>Reported by: {{ ticket.submitted_by }}</div>
-    <div>Assigned to: {{ ticket.assigned_to }}</div>
+    <div>Assigned to: {{ ticket.assigned_to }}</div> <a href={% url 'change-assignment' ticket.id %}>Change Assignment</a>
     <div>Submitted on: {{ ticket.created_at }}</div>
     <div>Last updated: {{ ticket.updated_at }}</div>
 {% endblock %}
