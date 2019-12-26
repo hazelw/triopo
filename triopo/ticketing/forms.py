@@ -18,11 +18,13 @@ class TicketForm(forms.Form):
 class ChangeAssignmentForm(forms.Form):
     team = forms.ModelChoiceField(
         queryset=Team.objects.filter(is_active=True),
-        empty_label='N/A'
+        empty_label='N/A',
+        required=False
     )
     user = forms.ModelChoiceField(
         queryset=User.objects.filter(is_active=True),
-        empty_label='N/A'
+        empty_label='N/A',
+        required=False
     )
     email = forms.CharField(max_length=150, required=False)
     slack_id = forms.CharField(max_length=150, required=False)
