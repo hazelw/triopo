@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import render
 
 from ticketing.models import Ticket
@@ -22,3 +22,17 @@ def index(request):
     }
 
     return render(request, 'review.html', context)
+
+
+@login_required(login_url='/login/')
+def view_ticket(request, ticket_id):
+    try:
+        ticket = Ticket.objects.get(id=ticket_id)
+    except Ticket.DoesNotExist:
+        raise Http404
+
+    context = {
+        'ticket': ticket
+    }
+
+    return render(request, 'ticket.html', context)

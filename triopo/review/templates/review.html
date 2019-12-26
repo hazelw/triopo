@@ -11,6 +11,7 @@
                 <th>Status</th>
                 <th>Submitted by</th>
                 <th>Assigned to</th>
+                <th>View</th>
             </tr>
             {% for ticket in tickets %}
                 <tr>
@@ -20,6 +21,7 @@
                     <td>{{ ticket.status }}</td>
                     <td>{{ ticket.submitted_by }}</td>
                     <td>{{ ticket.assigned_to }}</td>
+                    <td><a href="{% url 'view-ticket' ticket.id %}">View</a></td>
                 </tr>
             {% endfor %}
         </table>

@@ -1,0 +1,12 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <h2>{{ ticket.title }}</h2>
+    <h4>Status: {{ ticket.status }}</h4>
+    <div>{{ ticket.description }}</div>
+    <br />
+    <div>Reported by: {{ ticket.submitted_by }}</div>
+    <div>Assigned to: {{ ticket.assigned_to }}</div>
+    <div>Submitted on: {{ ticket.created_at }}</div>
+    <div>Last updated: {{ ticket.updated_at }}</div>
+{% endblock %}
