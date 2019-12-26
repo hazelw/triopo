@@ -1,5 +1,10 @@
+h2 {
+    color: green;
+}
+
 .container {
     background-color: #05004e;
+    font-family: ribik, arial;
     padding: 1em;
 }
 

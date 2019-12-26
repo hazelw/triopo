@@ -1,11 +1,6 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <p>Welcome to Triopo</p>
-
-    <ul>
-        <li><a href="{% url 'login' %}">Log in</a></li>
-        <li><a href="{% url 'view-tickets' %}">View tickets</a></li>
-        <li><a href="{% url 'log-ticket' %}">Log new ticket</a></li>
-    </ul>
+    <p>Welcome to <b>Triopo</b>.</p>
+    <p>Triopo is a very basic, intentionally lightweight ticketing system. It is currently under construction. Select one of the options on the sidebar to create a new ticket, or view all of the tickets in the system.</p>
 {% endblock %}

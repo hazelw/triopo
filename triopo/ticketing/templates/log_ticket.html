@@ -1,11 +1,13 @@
-{% include 'sidebar.html' %}
+{% extends 'main.html' %}
 
-<p><h2>Create new ticket</h2></p>
+{% block content %}
+    <p><h2>Create new ticket</h2></p>
 
-<p>
-    <form method='POST'>
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" />
-    </form>
-</p>
+    <p>
+        <form method='POST'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" />
+        </form>
+    </p>
+{% endblock %}

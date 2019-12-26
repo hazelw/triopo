@@ -1,6 +1,7 @@
-{% include 'sidebar.html' %}
+{% extends 'main.html' %}
 
 {% block content %}
+    <h2>Tickets</h2>
     {% if tickets %}
         <table>
             <tr>
@@ -22,5 +23,7 @@
                 </tr>
             {% endfor %}
         </table>
+    {% else %}
+        There are currently no tickets in the system - click 'log new ticket' to get started.
     {% endif %}
 {% endblock %}
