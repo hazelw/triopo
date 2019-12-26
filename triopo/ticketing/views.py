@@ -73,4 +73,6 @@ def change_assignment(request, ticket_id):
             elif slack_id:
                 assign_ticket_to_slack_id(ticket_id, slack_id)
 
+            return redirect(reverse('view-ticket', args=[ticket_id]))
+
     return render(request, 'change_assignment.html', context)

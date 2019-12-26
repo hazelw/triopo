@@ -1,4 +1,4 @@
-from .models import Ticket
+from .models import Ticket, AssignedAnonymousUser
 
 
 def clear_ticket_assignment(ticket_id):
@@ -20,8 +20,18 @@ def assign_ticket_to_user(ticket_id, user):
 
 
 def assign_ticket_to_email(ticket_id, email):
-    pass
+    ticket = Ticket.objects.get(id=ticket_id)
+    assignment = AssignedAnonymousUser.objects.create(
+        email=email    
+    )
+    ticket.assigned_to = assignment
+    ticket.save()
 
 
 def assign_ticket_to_slack_id(ticket_id, slack_id):
-    pass
+    ticket = Ticket.objects.get(id=ticket_id)
+    assignment = AssignedAnonymousUser.objects.create(
+        slack_id=slack_id
+    )
+    ticket.assigned_to = assignment
+    ticket.save()
