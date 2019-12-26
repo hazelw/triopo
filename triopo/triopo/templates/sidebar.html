@@ -6,6 +6,7 @@
     {% if user.is_authenticated %}
         <a href="{% url 'log-ticket' %}">Log new ticket</a>
         <a href="{% url 'view-tickets' %}">View tickets</a>
+        <a href="{% url 'logout' %}">Log out</a>
     {% else %}
         <a href="{% url 'login' %}">Log in</a>
     {% endif %}
