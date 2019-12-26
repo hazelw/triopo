@@ -1,4 +1,6 @@
-<link rel="stylesheet" type="text/css" href="sidebar.css" />
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'sidebar.css' %}" />
 
 <div class="sidebar">
     {% if user.is_authenticated %}

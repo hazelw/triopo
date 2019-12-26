@@ -1,0 +1,25 @@
+.container {
+    background-color: #05004e;
+    padding: 1em;
+}
+
+.title {
+    margin: 0;
+    color: #fd5f00;
+}
+
+.main {
+    margin-top: 1em;
+    display: flex;
+}
+
+.sidebar-container {
+    width: 25%;
+}
+
+.content {
+    background-color: #f9f8eb;
+    margin-left: 1em;
+    padding-left: 1em;
+    width: 100%;
+}

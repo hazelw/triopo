@@ -1,9 +1,11 @@
-{% include 'sidebar.html' %}
+{% extends 'main.html' %}
 
-<p>Welcome to Triopo</p>
+{% block content %}
+    <p>Welcome to Triopo</p>
 
-<ul>
-    <li><a href="{% url 'login' %}">Log in</a></li>
-    <li><a href="{% url 'view-tickets' %}">View tickets</a></li>
-    <li><a href="{% url 'log-ticket' %}">Log new ticket</a></li>
-</ul>
+    <ul>
+        <li><a href="{% url 'login' %}">Log in</a></li>
+        <li><a href="{% url 'view-tickets' %}">View tickets</a></li>
+        <li><a href="{% url 'log-ticket' %}">Log new ticket</a></li>
+    </ul>
+{% endblock %}

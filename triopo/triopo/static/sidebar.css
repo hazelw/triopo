@@ -1,0 +1,10 @@
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    background-color: #f9f8eb;
+    padding: 1em;
+}
+
+h2 {
+    color: green;
+}

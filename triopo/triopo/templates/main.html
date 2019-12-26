@@ -1,0 +1,19 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}" />
+
+<div class="container">
+    {% block title %}<h1 class="title">Triopo</h1>{% endblock %}
+
+    <div class="main">
+        <div class="sidebar-container">
+            {% block sidebar %}
+                {% include 'sidebar.html' %}
+            {% endblock %}
+        </div>
+
+        <div class="content">
+            {% block content %}default content{% endblock %}
+        </div>
+    </div>
+</div>
