@@ -28,3 +28,7 @@ h2 {
     padding-left: 1em;
     width: 100%;
 }
+
+.login-form {
+    line-height: 1.75em;
+}
