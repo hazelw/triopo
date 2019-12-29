@@ -50,9 +50,7 @@ class AssignedAnonymousUser(Assignee):
     email = models.CharField(max_length=100, null=True, blank=True)
     slack_id = models.CharField(max_length=60, null=True, blank=True)
 
-    def __init__(self, *args, **kwargs):
-        super(AssignedAnonymousUser, self).__init__()
-
+    def save(self, *args, **kwargs):
         if 'email' not in kwargs:
             assert kwargs.get('slack_id') is not None, \
                 'Either email or Slack ID must be provided'
