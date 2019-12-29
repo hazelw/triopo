@@ -1,6 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
@@ -14,7 +14,7 @@ from .assignment import (
 )
 
 from .constants import TicketStatus
-from .forms import TicketForm, ChangeAssignmentForm
+from .forms import TicketForm, ChangeAssignmentForm, ChangeTicketStatusForm
 from .models import Ticket
 
 
@@ -54,7 +54,6 @@ def change_assignment(request, ticket_id):
             field_values = [
                 field for field in [team, user, email, slack_id] if field
             ]
-            print(field_values)
 
             if len(field_values) > 1:
                 # TODO: avoid raw exception
@@ -76,3 +75,26 @@ def change_assignment(request, ticket_id):
             return redirect(reverse('view-ticket', args=[ticket_id]))
 
     return render(request, 'change_assignment.html', context)
+
+
+@login_required(login_url='/login/')
+def change_ticket_status(request, ticket_id):
+    try:
+        ticket = Ticket.objects.get(id=ticket_id)
+    except Ticket.DoesNotExist:
+        raise Http404
+
+    if request.method == 'POST':
+        form = ChangeTicketStatusForm(request.POST)
+        if form.is_valid():
+            ticket.update_status(TicketStatus[form.cleaned_data.get('status')])
+            return redirect(reverse('view-ticket', args=[ticket_id]))
+    
+    form = ChangeTicketStatusForm() 
+    current_status = ticket.status
+    context = {
+        'form': form,
+        'current_status': current_status
+    }
+
+    return render(request, 'change_ticket_status.html', context)

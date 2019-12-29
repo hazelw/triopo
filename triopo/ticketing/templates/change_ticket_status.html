@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <p><h2>Change ticket status</h2></p>
+
+    <p>The ticket's current status is <b>{{ current_status }}</b>.</p>
+    <p>
+        <form method='POST'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" />
+        </form>
+    </p>
+{% endblock %}

@@ -35,6 +35,11 @@ class Ticket(models.Model):
     )
     # attachments = ???
 
+    def update_status(self, status):
+        assert status in TicketStatus, 'Unable to update status to %s'
+        self.status = status.value
+        self.save()
+
 
 class Assignee(models.Model):
     pass

@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 from account.models import Team
 
-from .constants import TicketPriority
+from .constants import TicketPriority, TicketStatus
 
 
 class TicketForm(forms.Form):
@@ -28,3 +28,9 @@ class ChangeAssignmentForm(forms.Form):
     )
     email = forms.CharField(max_length=150, required=False)
     slack_id = forms.CharField(max_length=150, required=False)
+
+
+class ChangeTicketStatusForm(forms.Form):
+    status = forms.ChoiceField(
+        choices=[(status.name, status.value) for status in TicketStatus]
+    )
