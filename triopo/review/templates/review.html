@@ -5,6 +5,7 @@
     {% if tickets %}
         <table>
             <tr>
+                <th>ID</th>
                 <th>Last updated</th>
                 <th>Title</th>
                 <th>Priority</th>
@@ -15,6 +16,7 @@
             </tr>
             {% for ticket in tickets %}
                 <tr>
+                    <td>{{ ticket.id }}</td>
                     <td>{{ ticket.updated_at }}</td>
                     <td>{{ ticket.title }}</td>
                     <td>{{ ticket.priority }}</td>

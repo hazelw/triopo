@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <h2>{{ ticket.title }}</h2>
+    <h2>#{{ ticket.id }} - {{ ticket.title }}</h2>
     <h4>Status: <a href="{% url 'change-ticket-status' ticket.id %}">{{ ticket.status }}</a></h4>
     <div>{{ ticket.description }}</div>
     <br />
