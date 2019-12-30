@@ -40,6 +40,12 @@ class Ticket(models.Model):
         self.status = status.value
         self.save()
 
+    def save(self, *args, **kwargs):
+        super(Ticket, self).save(*args, **kwargs)
+
+        from review.models import Conversation
+        Conversation.objects.get_or_create(ticket=self)
+
 
 class Assignee(models.Model):
     pass
