@@ -1,11 +1,25 @@
 from datetime import datetime
 
+from django.db import transaction
+from django.http import Http404
+
+from ticketing.models import Ticket
+
 from .models import Conversation, Reply
 
 
+@transaction.atomic()
 def create_reply(ticket_id, user, text, status):
-    # TODO: if the status has changed we should be creating some kind of status
-    # change audit trail too
+    try:
+        ticket = Ticket.objects.get(id=ticket_id)
+    except:
+        return Http404
+
+    # has the ticket status changed? TODO: reconcile this with the function on
+    # Ticket, add audit trail
+    if ticket.status != status:
+        ticket.status = status
+        ticket.save()
 
     convo = Conversation.objects.get(ticket_id=ticket_id)
     now = datetime.now()
@@ -16,7 +30,3 @@ def create_reply(ticket_id, user, text, status):
         text=text,
         submitted_by=user
     )
-
-    # TODO: has the status changed? update ticket status if so. we'll want
-    # to make sure the status dropdown is set to the current status
-    # of the ticket by default

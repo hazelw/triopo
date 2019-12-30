@@ -34,7 +34,7 @@ def view_ticket(request, ticket_id):
     except Ticket.DoesNotExist:
         raise Http404
 
-    form = ReplyForm()
+    form = ReplyForm(ticket=ticket)
 
     context = {
         'ticket': ticket,
