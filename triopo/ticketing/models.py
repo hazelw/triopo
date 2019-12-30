@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils import timezone
@@ -23,10 +23,10 @@ class Ticket(models.Model):
         User, on_delete=models.PROTECT, null=True,
         related_name='submitted_ticket'
     )
+    assigned_to = GenericForeignKey('assignee_type', 'assignee_id')
     assignee_type = models.ForeignKey(
         ContentType, on_delete=models.PROTECT, null=True, blank=True)
     assignee_id = models.PositiveIntegerField(null=True, blank=True)
-    assigned_to = GenericForeignKey('assignee_type', 'assignee_id')
 
     status = models.CharField(
         max_length=30,
@@ -61,15 +61,27 @@ class AssignedAnonymousUser(Assignee):
     email = models.CharField(max_length=100, null=True, blank=True)
     slack_id = models.CharField(max_length=60, null=True, blank=True)
 
-    def save(self, *args, **kwargs):
-        if 'email' not in kwargs:
-            assert kwargs.get('slack_id') is not None, \
-                'Either email or Slack ID must be provided'
+    def __str__(self):
+        if self.email:
+            return str('%s (Email)' % self.email)
+        if self.slack_id:
+            return str('%s (Slack)' % self.slack_id)
 
-        if 'slack_id' not in kwargs:
-            assert kwargs.get('email') is not None, \
-                'Either email or Slack ID must be provided'
+    def save(self, *args, **kwargs):
+        if not self.email and not self.slack_id:
+            # TODO: better exception
+            raise Exception('Either email or Slack ID must be provided')
+        
+        super(AssignedAnonymousUser, self).save(*args, **kwargs)
 
 
 class AssignedTeam(Assignee):
     team = models.ForeignKey(Team, on_delete=models.PROTECT, null=True)
+
+
+class LinkedUser(Assignee):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    slack_id = models.CharField(max_length=100, null=True, unique=True)
+    # TODO: a user can only have one email? Maybe not
+    email = models.CharField(max_length=100, null=True, unique=True)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
