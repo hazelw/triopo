@@ -5,6 +5,9 @@ from django.shortcuts import render
 from ticketing.models import Ticket
 from ticketing.constants import TicketStatus
 
+from .controller import create_reply
+from .forms import ReplyForm
+
 
 @login_required(login_url='/login/')
 def index(request):
@@ -31,8 +34,24 @@ def view_ticket(request, ticket_id):
     except Ticket.DoesNotExist:
         raise Http404
 
+    form = ReplyForm()
+
     context = {
-        'ticket': ticket
+        'ticket': ticket,
+        'form': form
     }
 
     return render(request, 'ticket.html', context)
+
+
+@login_required(login_url='/login/')
+def reply(request, ticket_id):
+    if not request.POST:
+        raise Http404
+
+    text = request.POST.get('text')
+    status = request.POST.get('status')
+
+    create_reply(ticket_id, request.user, text, status)
+
+    return view_ticket(request, ticket_id)

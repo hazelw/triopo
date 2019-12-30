@@ -9,4 +9,14 @@
     <div>Assigned to: <a href="{% url 'change-assignment' ticket.id %}">{{ ticket.assigned_to }}</a></div>
     <div>Submitted on: {{ ticket.created_at }}</div>
     <div>Last updated: {{ ticket.updated_at }}</div>
+
+    <div>
+        <h3>Reply</h3>
+        <form method="POST" action="{% url 'reply' ticket.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <input type="submit" />
+        </form>
+    </div>
 {% endblock %}
