@@ -1,5 +1,6 @@
 from django.db.models import Q
 
+from .exceptions import ContradictoryUserDetailsException
 from .models import Ticket, LinkedUser, AssignedUser, AssignedAnonymousUser
 
 
@@ -34,9 +35,7 @@ def get_all_assigned_tickets_for_user(user=None, slack_id=None, email=None):
             contact_type for contact_type in contact_types
             if contact_type is not None
         ]) > 1:
-            # TODO: really sort out exceptions
-            raise Exception(
-                'Please only look for assigned tickets for one user')
+            raise ContradictoryUserDetailsException()
 
         if user:
             assignments = AssignedUser.objects.filter(user=user)

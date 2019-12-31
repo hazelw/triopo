@@ -14,6 +14,7 @@ from .assignment import (
 )
 
 from .constants import TicketStatus
+from .exceptions import TooMuchInfoException
 from .forms import TicketForm, ChangeAssignmentForm, ChangeTicketStatusForm
 from .models import Ticket
 
@@ -56,8 +57,7 @@ def change_assignment(request, ticket_id):
             ]
 
             if len(field_values) > 1:
-                # TODO: avoid raw exception
-                raise Exception(
+                raise TooMuchInfoException(
                     'You should only provide the user, email address OR slack ID'
                 )
 

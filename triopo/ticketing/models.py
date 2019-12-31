@@ -5,7 +5,9 @@ from django.db import models
 from django.utils import timezone
 
 from account.models import Team
-from ticketing.constants import TicketPriority, TicketStatus
+
+from .constants import TicketPriority, TicketStatus
+from .exceptions import NotEnoughInfoException
 
 
 class Ticket(models.Model):
@@ -69,8 +71,9 @@ class AssignedAnonymousUser(Assignee):
 
     def save(self, *args, **kwargs):
         if not self.email and not self.slack_id:
-            # TODO: better exception
-            raise Exception('Either email or Slack ID must be provided')
+            raise NotEnoughInfoException(
+                'Either email or Slack ID must be provided'
+            )
         
         super(AssignedAnonymousUser, self).save(*args, **kwargs)
 
