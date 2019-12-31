@@ -10,6 +10,14 @@
     <div>Submitted on: {{ ticket.created_at }}</div>
     <div>Last updated: {{ ticket.updated_at }}</div>
 
+    {% for reply in replies %}
+        <div>
+            <b>{{ reply.submitted_by }}</b>
+            <div>{{ reply.text }}</div>
+            <div>{{ reply.created_at }}</div>
+        </div>
+    {% endfor %}
+
     <div>
         <h3>Reply</h3>
         <form method="POST" action="{% url 'reply' ticket.id %}">

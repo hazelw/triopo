@@ -7,6 +7,7 @@ from ticketing.constants import TicketStatus
 
 from .controller import create_reply
 from .forms import ReplyForm
+from .models import Conversation
 
 
 @login_required(login_url='/login/')
@@ -35,10 +36,13 @@ def view_ticket(request, ticket_id):
         raise Http404
 
     form = ReplyForm(ticket=ticket)
+    convo = Conversation.objects.get(ticket=ticket)
+    replies = convo.reply_set.all()
 
     context = {
         'ticket': ticket,
-        'form': form
+        'form': form,
+        'replies': replies
     }
 
     return render(request, 'ticket.html', context)
