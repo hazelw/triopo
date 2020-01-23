@@ -1,0 +1,10 @@
+<p>A new ticket has been assigned to you.</p>
+
+<p>Please see details beneath:</p>
+<div>
+    <p>{ ticket.title }</p>
+    <p>{ ticket.description }</p>
+    <p>Ticket priority: { ticket.priority }</p>
+</div>
+
+<a href="{% url 'view-ticket' ticket.id %}">View further information</a>
