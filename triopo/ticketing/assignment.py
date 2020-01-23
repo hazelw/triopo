@@ -1,4 +1,6 @@
+from django.db import transaction
 from integrations.email import send_new_assignment_email
+from integrations.slack import send_notification_to_slack_user
 from .models import Ticket, AssignedAnonymousUser
 
 
@@ -31,6 +33,7 @@ def assign_ticket_to_email(ticket_id, email):
     send_new_assignment_email(email, ticket)
 
 
+@transaction.atomic
 def assign_ticket_to_slack_id(ticket_id, slack_id):
     ticket = Ticket.objects.get(id=ticket_id)
     assignment = AssignedAnonymousUser.objects.create(
@@ -38,3 +41,4 @@ def assign_ticket_to_slack_id(ticket_id, slack_id):
     )
     ticket.assigned_to = assignment
     ticket.save()
+    send_notification_to_slack_user(slack_id)

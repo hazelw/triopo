@@ -1,0 +1,2 @@
+class SlackIdNotFoundException(Exception):
+    pass
