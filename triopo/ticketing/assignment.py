@@ -1,3 +1,4 @@
+from integrations.email import send_new_assignment_email
 from .models import Ticket, AssignedAnonymousUser
 
 
@@ -26,6 +27,7 @@ def assign_ticket_to_email(ticket_id, email):
     )
     ticket.assigned_to = assignment
     ticket.save()
+    send_new_assignment_email(email, ticket)
 
 
 def assign_ticket_to_slack_id(ticket_id, slack_id):

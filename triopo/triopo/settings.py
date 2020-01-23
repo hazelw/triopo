@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'triopo.apps.MainConfig',
     'account.apps.AccountConfig',
+    'integrations.apps.IntegrationsConfig',
     'review.apps.ReviewConfig',
     'ticketing.apps.TicketingConfig',
 ]
