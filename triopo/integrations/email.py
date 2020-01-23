@@ -31,4 +31,3 @@ def send_email(
             'html': html
         }
     )
-    print(response)

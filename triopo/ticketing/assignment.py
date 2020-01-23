@@ -18,6 +18,7 @@ def assign_ticket_to_user(ticket_id, user):
     ticket = Ticket.objects.get(id=ticket_id)
     ticket.assigned_to = user
     ticket.save()
+    send_new_assignment_email(user.email, ticket)
 
 
 def assign_ticket_to_email(ticket_id, email):
